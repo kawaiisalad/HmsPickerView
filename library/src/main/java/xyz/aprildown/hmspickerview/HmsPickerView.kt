@@ -69,7 +69,7 @@ class HmsPickerView(
         fun onHmsPickerViewInputChanged(hmsPickerView: HmsPickerView, input: Long)
     }
 
-    private val input = intArrayOf(0, 0, 0, 0, 0, 0)
+    private val input = intArrayOf(0, 0, 0, 0)
 
     private var inputPointer = -1
     private val timeTemplate: CharSequence
@@ -86,17 +86,15 @@ class HmsPickerView(
 
     init {
         val bf = BidiFormatter.getInstance(false /* rtlContext */)
-        val hoursLabel = bf.unicodeWrap(context.getString(R.string.hpv_hours_label))
+//        val hoursLabel = bf.unicodeWrap(context.getString(R.string.hpv_hours_label))
         val minutesLabel = bf.unicodeWrap(context.getString(R.string.hpv_minutes_label))
         val secondsLabel = bf.unicodeWrap(context.getString(R.string.hpv_seconds_label))
 
         // Create a formatted template for "00h 00m 00s".
         timeTemplate = TextUtils.expandTemplate(
-            "^1^4 ^2^5 ^3^6",
+            "^1^3 ^2^4",
             bf.unicodeWrap("^1"),
             bf.unicodeWrap("^2"),
-            bf.unicodeWrap("^3"),
-            formatText(hoursLabel, RelativeSizeSpan(0.3f)),
             formatText(minutesLabel, RelativeSizeSpan(0.3f)),
             formatText(secondsLabel, RelativeSizeSpan(0.3f))
         )
@@ -186,11 +184,11 @@ class HmsPickerView(
     private fun updateTime() {
         val seconds = input[1] * 10 + input[0]
         val minutes = input[3] * 10 + input[2]
-        val hours = input[5] * 10 + input[4]
+        val hours = 0
 
         timeView.text = TextUtils.expandTemplate(
             timeTemplate,
-            getFormattedNumber(hours, 2),
+//            getFormattedNumber(hours, 2),
             getFormattedNumber(minutes, 2),
             getFormattedNumber(seconds, 2)
         )
@@ -367,7 +365,7 @@ class HmsPickerView(
      * Get current hours.
      * @return 0 ~ 99 hours.
      */
-    fun getHours(): Int = input[5] * 10 + input[4]
+    fun getHours(): Int = 0
 
     /**
      * Get current time in milliseconds.
